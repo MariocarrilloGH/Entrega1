@@ -52,18 +52,13 @@ def produce(tid, buffer, index, mutex, empty, full):
 def consume(buffers, read, mutexes, emptys, fulls):
     result = []
     
-    while True:
-        printArray(result)
-        #for i in range(NPROD):
-         #   printArray(buffers[i], f'{i} ')
+    while len(result) < NPROD*NUMS:
             
-        
         for f in fulls:
             f.acquire()
     
         min_index = get_minimum(buffers, read, mutexes)
         if min_index == NPROD:
-            print("no debería llegar ------------------")
             return
         
         result.append(get_data(buffers[min_index],
@@ -76,12 +71,7 @@ def consume(buffers, read, mutexes, emptys, fulls):
                 fulls[f].release()
             else:
                 emptys[f].release()
-    
-    
-    if result == range(NPROD*NUMS):
-        print("OK")
-    else:
-        print("NOT OK")
+        
         printArray(result)
 
 def main():
